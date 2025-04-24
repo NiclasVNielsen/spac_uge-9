@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <div class="container body">
-    <header>
+    <header class="shadow r">
         <nav>
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/about">About</RouterLink>
@@ -24,6 +24,7 @@ header
   top: 0
   left: 0
   height: 100vh
+  z-index: 1000
   width: calc(var(--differentContextGap) * 1.5)
   background: var(--second)
   padding: var(--sameContextGap) 0
