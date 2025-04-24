@@ -29,7 +29,7 @@ header
   padding: var(--sameContextGap) 0
 
 .main
-  width: calc(100% - (var(--differentContextGap) * 1.5))
+  width: 100%
   padding: 0
 
 main
