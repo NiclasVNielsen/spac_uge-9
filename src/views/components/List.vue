@@ -7,18 +7,59 @@ const props = defineProps({
 
 const keys = ref([])
 const itemKeyDisplay = ref([])
+const searchWords = ref([])
 
 let i = 0
 for (const key in props.data[0]) {
     i++
     keys.value.push(key)
     itemKeyDisplay.value.push(i < 4 ? true : false)
+    searchWords.value.push("")
 }
 
+const filteredData = ref([])
+
+const search = () => {
+    filteredData.value = []
+
+    props.data.filter(
+        (item) => {
+            let passFilter = true
+            
+            let i = 0
+            for(const key in item){
+                if(!`${item[key]}`.toLowerCase().includes(searchWords.value[i].toLowerCase()))
+                    passFilter = false
+                i++
+            }
+            
+            if(passFilter)
+                filteredData.value.push(item)
+        }
+    )
+}
+
+//search()
+
+const toggleSearches = (forceMode = null) => {
+    const container = document.querySelector('.searchFieldsContainer')
+
+    const currentlyOn = container.classList.contains('on')
+
+    if(!forceMode)
+        container.classList.toggle('on')
+        if(currentlyOn)
+            search()
 
 
-const toggleSearches = () => {
-    document.querySelector('.searchFieldsContainer').classList.toggle('on')
+    if(forceMode == "off"){
+        if(currentlyOn)
+            container.classList.toggle('on')
+    }
+    if(forceMode == "on"){
+        if(!currentlyOn)
+            container.classList.toggle('on')
+    }
 }
 
 const toggleBurger = () => {
@@ -52,7 +93,7 @@ const toggleBurger = () => {
                 </p>
             </template>
         </div>
-        <ol>
+        <ol @click="toggleSearches('off')">
 
             <li class="shadow b" v-for="(item, index) in props.data" :key="index">
                 <div>
@@ -73,18 +114,14 @@ const toggleBurger = () => {
                     Search
                 </div>
                 <div class="searchFieldsContainer">
-                    <div class="container border searchInputs">
-                        <label for="">
-                            Title
-                        </label>
-                        <input type="text" placeholder="Title">
-                    </div>
-                    <div class="container border searchInputs">
-                        <label for="">
-                            Title2
-                        </label>
-                        <input type="text" placeholder="Title">
-                    </div>
+                    <template v-for="(key, index) in keys" :key="keys">
+                        <div class="container border searchInputs">
+                            <label for="">
+                                {{ key }}
+                            </label>
+                            <input type="text" v-model="searchWords[index]">
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
@@ -125,6 +162,8 @@ ol
                     content: "x"
                     font-weight: bold
                     font-size: 1.2em
+                    display: block
+                    margin-top: -2px 
         label.border.a
             width: 1.5rem
             height: 1.5rem
@@ -201,7 +240,7 @@ ol
     background: var(--neutral)
     transform: translateX(100%)
 
-.sideOn 
+.sideOn
     .col-8
         width: 66.666%
         .alignment
@@ -226,9 +265,11 @@ ol
         .linkBox
             width: auto
         .searchFieldsContainer
-            width: calc(100% - (6px + (var(--sameContextGap) * 3.6) + 61px))
+            overflow-y: scroll
+            max-height: 100vh
+            width: calc(100% - (6px + (var(--sameContextGap) * 4.6) + 60px))
             padding-left: 60px
-            margin-right: calc(6px + (var(--sameContextGap) * 3.6) + 61px)
+            margin-right: calc(6px + (var(--sameContextGap) * 4.6) + 60px)
             position: absolute
             bottom: 0
             margin-bottom: calc(1 - var(--sameContextGap))
