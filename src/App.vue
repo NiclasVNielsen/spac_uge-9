@@ -7,6 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <header class="shadow r">
         <nav>
           <RouterLink to="/">Items</RouterLink>
+          <RouterLink to="/supplier">Supplier</RouterLink>
         </nav>
     </header>
     
@@ -48,6 +49,9 @@ a
   transform: rotate(180deg)
   &:hover
     color: var(--neutral)
+
+.router-link-active
+  color: var(--neutral)
 
 .container.body
   padding: 0

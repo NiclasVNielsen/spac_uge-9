@@ -7,7 +7,7 @@ import { ref } from "vue"
 const data = ref([])
 
 const getData = async () => {
-  let res = await CRUD.get("items") //supplier
+  let res = await CRUD.get("supplier")
   res = res.slice(0, 20)
   data.value = res
 }
