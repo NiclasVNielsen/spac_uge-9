@@ -239,8 +239,8 @@ ol
                 transform: translateY(var(--sameContextGap))
             .searchInputs
                 padding-top: 0
-                &::first-of-type
-                    margin-top: var(--sameContextGap)
+                &:first-of-type
+                    padding-top: var(--sameContextGap)
                 &:last-of-type
                     margin-bottom: -3px
                 label
@@ -261,6 +261,7 @@ ol
     height: calc(var(--sameContextGap) * 1.5)
     width: calc(var(--sameContextGap) * 1.5)
     z-index: 10000
+    cursor: pointer
 
 
 </style>

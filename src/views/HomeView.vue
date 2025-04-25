@@ -8,7 +8,7 @@ const data = ref([])
 
 const getData = async () => {
   let res = await CRUD.get("items")
-  res = res.slice(0, 10)
+  res = res.slice(0, 20)
   data.value = res
 }
 getData()
