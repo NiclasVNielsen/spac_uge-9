@@ -8,6 +8,7 @@ const props = defineProps({
 const keys = ref([])
 const itemKeyDisplay = ref([])
 const searchWords = ref([])
+const checked = ref([])
 
 let i = 0
 for (const key in props.data[0]) {
@@ -15,9 +16,11 @@ for (const key in props.data[0]) {
     keys.value.push(key)
     itemKeyDisplay.value.push(i < 4 ? true : false)
     searchWords.value.push("")
+    checked.value.push(false)
 }
 
 const filteredData = ref([])
+
 
 const search = () => {
     filteredData.value = []
@@ -25,7 +28,7 @@ const search = () => {
     props.data.filter(
         (item) => {
             let passFilter = true
-            
+
             let i = 0
             for(const key in item){
                 if(!`${item[key]}`.toLowerCase().includes(searchWords.value[i].toLowerCase()))
@@ -39,7 +42,7 @@ const search = () => {
     )
 }
 
-//search()
+search()
 
 const toggleSearches = (forceMode = null) => {
     const container = document.querySelector('.searchFieldsContainer')
@@ -95,9 +98,9 @@ const toggleBurger = () => {
         </div>
         <ol @click="toggleSearches('off')">
 
-            <li class="shadow b" v-for="(item, index) in props.data" :key="index">
+            <li class="shadow b" v-for="(item, index) in filteredData" :key="index">
                 <div>
-                    <input type="checkbox" :id="index + 'item'">
+                    <input type="checkbox" :id="index + 'item'" v-model="checked[index]">
                     <label :for="index + 'item'" class="border a"></label>
                 </div>
                 <template v-for="(key, index) in keys" :key="index">
@@ -127,7 +130,22 @@ const toggleBurger = () => {
         </div>
     </div>
     <div class="col-4 shadow l">
-        moop
+        <ol>
+            <template v-for="(item, index) in filteredData" :key="index">
+                <li class="shadow b" v-if="checked[index]">
+                    <div>
+                        <input type="checkbox" :id="index + 'item'" v-model="checked[index]">
+                        <label :for="index + 'item'" class="border a"></label>
+                    </div>
+                    <template v-for="(key, index) in keys" :key="index">
+                        <div v-if="itemKeyDisplay[index]">
+                            {{ item[key] }}
+                        </div>
+                    </template>
+                </li>
+            </template>
+
+        </ol>
     </div>
     
 </div>
