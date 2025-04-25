@@ -21,12 +21,19 @@ const toggleSearches = () => {
     document.querySelector('.searchFieldsContainer').classList.toggle('on')
 }
 
+const toggleBurger = () => {
+    document.querySelector('.mainContainer').classList.toggle('sideOn')
+}
+
 </script>
 
 <template>
 
     
-<div class="container">
+<div class="container mainContainer">
+    <figure @click="toggleBurger()" class="burger">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/></svg>
+    </figure>
     <div class="col-8 navPadding">
         <div class="container showCheckboxes shadow b">
             <div v-for="(key, index) in keys" :key="keys">
@@ -91,6 +98,9 @@ const toggleSearches = () => {
 </template>
 
 <style lang="sass" scoped>
+
+svg
+    fill: var(--second)
 
 ol
     list-style: none
@@ -179,6 +189,25 @@ ol
 .col-4, .col-8
     min-height: calc(100vh - (var(--sameContextGap) * 2))
     position: relative
+    transition: var(--quickTransition)
+
+.col-8
+    width: 100%
+
+.col-4
+    position: fixed
+    right: 0
+    top: 0
+    background: var(--neutral)
+    transform: translateX(100%)
+
+.sideOn 
+    .col-8
+        width: 66.666%
+        .alignment
+            width: 66.666%
+    .col-4
+        transform: translateX(0)
 
 .searchPanel
     position: fixed
@@ -188,11 +217,12 @@ ol
     padding: var(--sameContextGap)
     .alignment
         position: relative
-        width: 66.666%
+        width: 100%
         padding-right: var(--sameContextGap)
         padding-left: 60px
         justify-content: flex-end
         display: flex
+        transition: var(--quickTransition)
         .linkBox
             width: auto
         .searchFieldsContainer
@@ -223,6 +253,14 @@ ol
                     border-top: 0
                     border-radius: 0 0 var(--borderRadius) var(--borderRadius)
                     
-            
+
+.burger
+    position: fixed
+    top: var(--sameContextGap)
+    right: var(--sameContextGap)
+    height: calc(var(--sameContextGap) * 1.5)
+    width: calc(var(--sameContextGap) * 1.5)
+    z-index: 10000
+
 
 </style>

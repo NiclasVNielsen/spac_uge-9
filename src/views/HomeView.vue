@@ -6,12 +6,12 @@ import { ref } from "vue"
 
 const data = ref([])
 
-const test = async () => {
+const getData = async () => {
   let res = await CRUD.get("items")
   res = res.slice(0, 10)
   data.value = res
 }
-test()
+getData()
 
 </script>
 
